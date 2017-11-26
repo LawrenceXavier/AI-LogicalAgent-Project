@@ -1,8 +1,8 @@
 #include "CNF.h"
 #include "Proposition.h"
-#include <iostream>
 
-Proposition CNF::splitIntoLiterals(const std::string &prop, char delim) {
+
+Proposition 	CNF::splitIntoLiterals(const std::string &prop, char delim) {
 	Proposition P;
 	for (int i = 0, len = prop.size(); i < len; ++i) {
 		std::string s = "";
@@ -49,7 +49,8 @@ CNF::CNF(const std::string &FILE_NAME) {
 	fi.close();
 }
 
-void CNF::printOut(std::ofstream &fo) const {
+
+void 		CNF::printOut(std::ofstream &fo) const {
 	bool flag = false;
 	for (std::set< Proposition >::iterator it = propList.begin(); it != propList.end(); ++it) {
 		if (flag) 
@@ -62,7 +63,8 @@ void CNF::printOut(std::ofstream &fo) const {
 	fo << std::endl;
 }
 
-int CNF::resolve() {
+
+int 		CNF::resolve() {
 	for (std::set< Proposition >::iterator it = propList.begin(); it != propList.end(); ++it) {
 		std::set< Proposition >::iterator jt = it;
 		++jt;
@@ -84,7 +86,8 @@ int CNF::resolve() {
 	return -1;
 }
 
-void RobinsonResolution(CNF cnf, const std::string &FILE_NAME) {
+
+void 		RobinsonResolution(CNF cnf, const std::string &FILE_NAME) {
 	std::ofstream fo(FILE_NAME);
 	
 	fo << cnf.inferred << std::endl;

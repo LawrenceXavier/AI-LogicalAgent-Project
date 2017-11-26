@@ -9,7 +9,7 @@
 
 class Proposition {
 private:
-	std::set<int> S;	// if S is empty, then the proposition is True
+	std::set<int>	S;	// if S is empty, then the proposition is True
 
 public:
 	Proposition&	operator += (int literal);

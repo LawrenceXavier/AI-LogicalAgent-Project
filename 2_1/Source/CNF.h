@@ -19,17 +19,18 @@
 class CNF {
 private:
 	std::string inferred;
-	std::set< Proposition > propList;
-	std::map< std::string, int > mpLiteral;
-	std::vector< std::string > mpStr;
+	std::set< Proposition > 	propList;
+	std::map< std::string, int > 	mpLiteral;
+	std::vector< std::string > 	mpStr;
 
-	Proposition splitIntoLiterals(const std::string &prop, char delim);
+	Proposition 	splitIntoLiterals(const std::string &prop, char delim);
 public:
 	CNF(const std::string &FILE_NAME);
-	void printOut(std::ofstream &fo) const;
-	int resolve();
 
-	friend void RobinsonResolution(CNF cnf, const std::string &FILE_NAME);
+	void		printOut(std::ofstream &fo) const;
+	int 		resolve();
+
+	friend void 	RobinsonResolution(CNF cnf, const std::string &FILE_NAME);
 };
 
 
