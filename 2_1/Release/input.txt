@@ -1,9 +1,0 @@
-KB
-~p|q
-~q|r
-~p|~r|s
-~r|k
-~k|m
-r
-ENDKB
-m
