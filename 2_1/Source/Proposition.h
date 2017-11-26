@@ -4,16 +4,22 @@
 #include <set>
 #include <string>
 #include <iterator>
+#include <fstream>
+#include <vector>
 
 class Proposition {
 private:
 	std::set<int> S;	// if S is empty, then the proposition is True
 
 public:
-	Proposition();
-	Proposition(const std::string &prop_text);
+	Proposition&	operator += (int literal);
+	Proposition	operator & (const Proposition &other) const;
+	bool		operator < (const Proposition &other) const;
+	
+	bool		isTrue() const;
+	bool 		isFalse() const;
 
-	Proposition operator & (const Proposition &other) const;
+	void 		printOut(std::ofstream &fo, const std::vector< std::string > &mpStr) const;
 };
 
 #endif
