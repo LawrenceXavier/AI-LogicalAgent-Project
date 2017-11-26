@@ -7,8 +7,6 @@
 
 class Proposition {
 private:
-	static void normalize(std::set<int> &prop);
-
 	std::set<int> S;	// if S is empty, then the proposition is True
 
 public:
