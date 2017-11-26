@@ -50,8 +50,14 @@ CNF::CNF(const std::string &FILE_NAME) {
 }
 
 void CNF::printOut(std::ofstream &fo) const {
+	bool flag = false;
 	for (std::set< Proposition >::iterator it = propList.begin(); it != propList.end(); ++it) {
+		if (flag) 
+			fo << ',';
+		else
+			flag = true;
 		it->printOut(fo, mpStr);
+		
 	}
 	fo << std::endl;
 }

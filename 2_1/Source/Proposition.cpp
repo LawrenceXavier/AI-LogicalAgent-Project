@@ -47,25 +47,28 @@ bool 		Proposition::operator < (const Proposition &other) const {
 	return false;
 }
 
+
 void 		Proposition::printOut(std::ofstream &fo, const std::vector< std::string > &mpStr) const {
 	bool flag = false;
 
 	for (std::set<int>::iterator it = S.begin(); it != S.end(); ++it) {
 		if (flag) 
 			fo << "|";
-		flag = true;
+		else
+			flag = true;
 
 		if ((*it) > 0)
 			fo << mpStr[(*it)-1];
 		else 
 			fo << "~" << mpStr[-(*it)-1];
 	}
-	fo << ",";
 }
+
 
 bool		Proposition::isTrue() const {
 	return S.find(0) != S.end();
 }
+
 
 bool 		Proposition::isFalse() const {
 	return S.size() == 0;
