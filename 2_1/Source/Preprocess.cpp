@@ -1,6 +1,7 @@
 #include "Preprocess.h"
 
 #include <fstream>
+#include <iostream>
 
 bool Preprocess::inLiteral(char c) {
 	return (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9');
@@ -33,26 +34,30 @@ void Preprocess::splitIntoLiterals(std::string &prop, char delim) {
 }
 
 Preprocess::Preprocess(const std::string &FILE_NAME) {
-	std::ifstream fi;
-	fi.open(FILE_NAME, std::ifstream::in);
+	std::ifstream fi(FILE_NAME);
 
+	std::cout << bool(fi) << std::endl;	
+	
 	std::string s;
 
 	std::getline(fi, s);	// read BEGIN_KB
-	
+	std::cout << s << std::endl;
+
 	// Read all propositions
 	do {
+		if (fi.eof()) break;
 		std::getline(fi, s);
+		std::cout << s << std::endl;
 		if (s == END_KB)	// read END_KB
 			break;
 		else {
 			propList.push_back(s);
-			splitIntoLiterals(s, OR_OP);
+//			splitIntoLiterals(s, OR_OP);
 		}
 	} while (true);
 
 	std::getline(fi, s);
-	splitIntoLiterals(s, AND_OP);
+//	splitIntoLiterals(s, AND_OP);
 	
 	fi.close();
 }
