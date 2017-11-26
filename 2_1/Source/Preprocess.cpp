@@ -1,11 +1,7 @@
 #include "Preprocess.h"
 
 #include <fstream>
-#include <iostream>
 
-bool Preprocess::inLiteral(char c) {
-	return (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9');
-}
 
 void Preprocess::splitIntoLiterals(std::string &prop, char delim) {
 	std::string editedprop = "";
@@ -14,50 +10,45 @@ void Preprocess::splitIntoLiterals(std::string &prop, char delim) {
 
 		int p = (delim == OR_OP) ? 1 : (-1);
 
-		while (i < len && prop[i] != delim) {	
-		// delim in [AND_OP, OR_OP]
-			if (inLiteral(prop[i]))
+		while (i < len && prop[i] != delim) 	// delim in [AND_OP, OR_OP]
+			if (prop[i] != NOT_OP) 
 				s += prop[i++];
-			else	// prop[i] = NOT_OP
-				p *= -1;
-		}
+			else 
+				p *= -1, ++i;
 		
 		if (mpLiteral.find(s) == mpLiteral.end()) {
 			int sz = mpLiteral.size();
-			mpLiteral[s] = sz;
+			mpLiteral[s] = sz+1;
 		}
 		
 		int val = mpLiteral[s];	
-		editedprop += std::to_string(val*p);
+		editedprop += std::to_string(val*p)+delim;
 	}
-	prop = editedprop;
+
+	prop = editedprop.substr(0, editedprop.length()-1);
 }
 
 Preprocess::Preprocess(const std::string &FILE_NAME) {
-	std::ifstream fi(FILE_NAME);
-
-	std::cout << bool(fi) << std::endl;	
-	
+	std::ifstream fi(FILE_NAME);	
 	std::string s;
 
 	std::getline(fi, s);	// read BEGIN_KB
-	std::cout << s << std::endl;
 
 	// Read all propositions
 	do {
 		if (fi.eof()) break;
+
 		std::getline(fi, s);
-		std::cout << s << std::endl;
-		if (s == END_KB)	// read END_KB
-			break;
-		else {
-			propList.push_back(s);
-//			splitIntoLiterals(s, OR_OP);
-		}
+
+		if (s == END_KB) break;	// read END_KB
+		
+		splitIntoLiterals(s, OR_OP);
+		propList.push_back(s);
 	} while (true);
 
 	std::getline(fi, s);
-//	splitIntoLiterals(s, AND_OP);
+	splitIntoLiterals(s, AND_OP);
+	propList.push_back(s);
 	
 	fi.close();
 }

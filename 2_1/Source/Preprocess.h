@@ -13,8 +13,6 @@
 
 class Preprocess {
 private:
-	static bool inLiteral(char c);
-	
 	std::vector< std::string > propList;
 	std::map< std::string, int > mpLiteral;
 
