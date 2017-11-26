@@ -1,3 +1,4 @@
+m
 ~m,r,~k|m,~r|k,~q|r,~p|q,~r|~p|s,
 ~k,r,~r|k,~q|r,~p|q,~r|~p|s,
 ~r,r,~q|r,~p|q,~r|~p|s,

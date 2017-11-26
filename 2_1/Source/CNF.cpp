@@ -43,6 +43,7 @@ CNF::CNF(const std::string &FILE_NAME) {
 	} 
 
 	std::getline(fi, s);
+	inferred = s;
 	propList.insert(splitIntoLiterals(s, AND_OP));
 	
 	fi.close();
@@ -79,6 +80,8 @@ int CNF::resolve() {
 
 void RobinsonResolution(CNF cnf, const std::string &FILE_NAME) {
 	std::ofstream fo(FILE_NAME);
+	
+	fo << cnf.inferred << std::endl;
 	int t;
 	do 	
 		cnf.printOut(fo);

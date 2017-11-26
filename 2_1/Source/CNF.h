@@ -18,6 +18,7 @@
 
 class CNF {
 private:
+	std::string inferred;
 	std::set< Proposition > propList;
 	std::map< std::string, int > mpLiteral;
 	std::vector< std::string > mpStr;
