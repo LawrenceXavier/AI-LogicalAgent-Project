@@ -1,5 +1,11 @@
 #include "Proposition.h"
 
+
+Proposition::Proposition() {
+	prio = 0;
+}
+
+
 Proposition&	Proposition::operator += (int literal) {
 	S.insert(literal);
 	return *this;
@@ -37,6 +43,8 @@ Proposition	Proposition::operator & (const Proposition &other) const {
 
 
 bool 		Proposition::operator < (const Proposition &other) const {
+	if (this->prio != other.prio) 
+		return this->prio < other.prio;
 	if (this->S.size() != other.S.size())
 		return this->S.size() < other.S.size();
 	for (std::set<int>::iterator it = this->S.begin(), jt = other.S.begin(); it != this->S.end(); ++it, ++jt) 
@@ -72,4 +80,8 @@ bool		Proposition::isTrue() const {
 
 bool 		Proposition::isFalse() const {
 	return S.size() == 0;
+}
+
+void		Proposition::assignPriority(unsigned int p) {
+	prio = p;
 }

@@ -1,6 +1,7 @@
 SOURCE_PATH="Source"
 RELEASE_PATH="Release"
 INPUT_FILE_PATH="$SOURCE_PATH/input.txt"
+EXECUTE_FILE_NAME="1512203"
 
 echo "Cleaning all files in $RELEASE_PATH/..."
 rm $RELEASE_PATH/*
@@ -20,7 +21,7 @@ echo "Going to $RELEASE_PATH/..."
 cd $RELEASE_PATH
 
 echo "Compiling into execute file..."
-g++ -std=gnu++14 -Wall Proposition.o CNF.o main.o -o LogicalAgent
+g++ -std=gnu++14 -Wall Proposition.o CNF.o main.o -o $EXECUTE_FILE_NAME
 
 echo "Leaving $RELEASE_PATH/..."
 cd "$TEMP_PATH"
@@ -32,7 +33,7 @@ echo "Going to $RELEASE_PATH/..."
 cd $RELEASE_PATH
 
 echo "Executing..."
-./LogicalAgent
+./$EXECUTE_FILE_NAME
 
 echo "Finished running"
 echo "Leaving $RELEASE_PATH/"

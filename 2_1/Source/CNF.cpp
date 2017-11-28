@@ -64,7 +64,7 @@ void 		CNF::printOut(std::ofstream &fo) const {
 }
 
 
-int 		CNF::resolve() {
+int 		CNF::resolve(unsigned int prio) {
 	for (std::set< Proposition >::iterator it = propList.begin(); it != propList.end(); ++it) {
 		std::set< Proposition >::iterator jt = it;
 		++jt;
@@ -77,7 +77,10 @@ int 		CNF::resolve() {
 			propList.erase(u);
 			propList.erase(v);
 			propList.insert(c);
-			
+			u.assignPriority(prio);
+			v.assignPriority(prio);
+			propList.insert(u);
+			propList.insert(v);
 			if (c.isFalse())
 				return 1;
 			return 0;
@@ -92,9 +95,10 @@ void 		RobinsonResolution(CNF cnf, const std::string &FILE_NAME) {
 	
 	fo << cnf.inferred << std::endl;
 	int t;
+	unsigned int prio = 1;
 	do 	
 		cnf.printOut(fo);
-	while ((t = cnf.resolve()) == 0);
+	while ((t = cnf.resolve(prio)) == 0);
 	if (t == 1)
 		fo << "True" << std::endl;
 	fo.close();

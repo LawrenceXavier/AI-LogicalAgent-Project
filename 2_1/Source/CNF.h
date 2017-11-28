@@ -28,7 +28,7 @@ public:
 	CNF(const std::string &FILE_NAME);
 
 	void		printOut(std::ofstream &fo) const;
-	int 		resolve();
+	int 		resolve(unsigned int prio);
 
 	friend void 	RobinsonResolution(CNF cnf, const std::string &FILE_NAME);
 };
