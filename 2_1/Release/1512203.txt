@@ -1,5 +1,0 @@
-m
-~m,r,~k|m,~r|k,~q|r,~p|q,~r|~p|s
-~k,r,~r|k,~q|r,~p|q,~r|~p|s,~m,~k|m
-~r,r,~q|r,~p|q,~r|~p|s,~m,~k,~k|m,~r|k
-True
