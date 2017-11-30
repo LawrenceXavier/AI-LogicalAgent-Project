@@ -74,6 +74,9 @@ int 		CNF::resolve(unsigned int prio) {
 			Proposition c = u&v;
 			if (c.isTrue())
 				continue;
+
+			if (propList.find(c) != propList.end())
+				continue;
 			propList.erase(u);
 			propList.erase(v);
 			propList.insert(c);
