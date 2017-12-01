@@ -2,6 +2,80 @@
 #include "Proposition.h"
 
 
+Element::Element() {
+	p = new Proposition();	// an empty proposition
+	prio = 0;
+}
+
+
+Element&	Element::operator += (int literal) {
+	(*p) += literal;
+	return *this;
+}
+
+	
+Element		Element::operator & (const Element &other) const {
+	Element res;
+	res.p = new Proposition((*(this->p)) & (*(other.p)));
+	res.prio = 0;
+	return res;
+}
+
+	
+bool		Element::operator < (const Element &other) const {
+	if (this->prio != other.prio)
+		return this->prio < other.prio;
+	return (*(this->p)) < (*(other.p));
+}
+
+
+bool 		Element::isTrue() const {
+	return this->p->isTrue();
+}
+
+
+bool 		Element::isFalse() const {
+	return this->p->isFalse();
+}
+
+
+void		Element::assignPriority(int pr) {
+	prio = pr;
+}	
+
+
+void 		Element::printOut(std::ofstream &fo, const std::vector< std::string > &mpStr) const {
+	this->p->printOut(fo, mpStr);
+}	
+
+void		ListProposition::addProp(const Element &e) {
+	staticList.insert(e.p);
+}
+
+
+bool		ListProposition::propExist(const Element &e) {
+	return staticList.find(e.p) != staticList.end();
+}
+
+
+ListProposition::~ListProposition() {
+	for (StatIt it = staticList.begin(); it != staticList.end(); ++it) 
+		delete (*it);
+	staticList.clear();
+}
+
+
+void 		CNF::addProp(const Element &e) {
+	propList.insert(e);
+	LP.addProp(e);
+}
+
+
+bool		CNF::propExist(const Element &e) {
+	return LP.propExist(e);
+}
+
+
 Element 	CNF::splitIntoLiterals(const std::string &prop, char delim) {
 	Element P;
 	for (int i = 0, len = prop.size(); i < len; ++i) {

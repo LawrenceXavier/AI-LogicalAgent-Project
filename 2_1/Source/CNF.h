@@ -28,45 +28,14 @@ private:
 	Proposition* 	p;
 	int 		prio;
 public:	
-	Element() {
-		p = new Proposition();	// an empty proposition
-		prio = 0;
-	}
-
-	Element&	operator += (int literal) {
-		(*p) += literal;
-		return *this;
-	}
-
-	
-	Element		operator & (const Element &other) const {
-		Element res;
-		res.p = new Proposition((*(this->p)) & (*(other.p)));
-		res.prio = 0;
-		return res;
-	}
-	
-	bool		operator < (const Element &other) const {
-		if (this->prio != other.prio)
-			return this->prio < other.prio;
-		return (*(this->p)) < (*(other.p));
-	}
-
-	bool 		isTrue() const {
-		return this->p->isTrue();
-	}
-
-	bool 		isFalse() const {
-		return this->p->isFalse();
-	}
-
-	void		assignPriority(int pr) {
-		prio = pr;
-	}	
-
-	void 		printOut(std::ofstream &fo, const std::vector< std::string > &mpStr) const {
-		this->p->printOut(fo, mpStr);
-	}	
+	Element();
+	Element&	operator += (int literal);
+	Element		operator & (const Element &other) const;
+	bool		operator < (const Element &other) const;
+	bool		isTrue() const;
+	bool		isFalse() const;
+	void		assignPriority(int pr);
+	void		printOut(std::ofstream &fo, const std::vector< std::string > &mpStr) const;
 };
 
 class ListProposition {
@@ -76,20 +45,9 @@ private:
 
 	TStatList	staticList;
 public:
-	void	addProp(const Element &e) {
-		staticList.insert(e.p);
-	}
-
-	bool	propExist(const Element &e) {
-		return staticList.find(e.p) != staticList.end();
-	}
-
-	~ListProposition() {
-		for (StatIt it = staticList.begin(); it != staticList.end(); ++it) 
-			delete (*it);
-		staticList.clear();
-	
-	}
+	void	addProp(const Element &e); 
+	bool	propExist(const Element &e);
+	~ListProposition(); 
 };
 
 
@@ -104,14 +62,8 @@ private:
 	std::map< std::string, int > 	mpLiteral;
 	std::vector< std::string > 	mpStr;
 
-	void 		addProp(const Element &e) {
-		propList.insert(e);
-		LP.addProp(e);
-	}
-
-	bool		propExist(const Element &e) {
-		return LP.propExist(e);
-	}
+	void 		addProp(const Element &e);	
+	bool		propExist(const Element &e);
 	
 	Element 	splitIntoLiterals(const std::string &prop, char delim);
 public:
