@@ -103,7 +103,7 @@ Element 	CNF::splitIntoLiterals(const std::string &prop, char delim) {
 
 
 CNF::CNF(const std::string &FILE_NAME) {
-	std::ifstream fi(FILE_NAME);	
+	std::ifstream fi(FILE_NAME.c_str());
 	std::string s;
 
 	std::getline(fi, s);		// read BEGIN_KB
@@ -170,7 +170,7 @@ int 		CNF::resolve(unsigned int prio) {
 
 
 void 		RobinsonResolution(CNF cnf, const std::string &FILE_NAME) {
-	std::ofstream fo(FILE_NAME);
+	std::ofstream fo(FILE_NAME.c_str());
 	
 	fo << cnf.inferred << std::endl;
 	int t;
