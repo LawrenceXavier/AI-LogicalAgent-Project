@@ -2,8 +2,8 @@
 #include "Proposition.h"
 
 
-Proposition 	CNF::splitIntoLiterals(const std::string &prop, char delim) {
-	Proposition P;
+Element 	CNF::splitIntoLiterals(const std::string &prop, char delim) {
+	Element P;
 	for (int i = 0, len = prop.size(); i < len; ++i) {
 		std::string s = "";
 
@@ -44,7 +44,7 @@ CNF::CNF(const std::string &FILE_NAME) {
 
 	std::getline(fi, s);
 	inferred = s;
-	propList.insert(splitIntoLiterals(s, AND_OP));
+	addProp(splitIntoLiterals(s, AND_OP));
 	
 	fi.close();
 }
@@ -52,7 +52,7 @@ CNF::CNF(const std::string &FILE_NAME) {
 
 void 		CNF::printOut(std::ofstream &fo) const {
 	bool flag = false;
-	for (std::set< Proposition >::iterator it = propList.begin(); it != propList.end(); ++it) {
+	for (SIter it = propList.begin(); it != propList.end(); ++it) {
 		if (flag) 
 			fo << ',';
 		else
@@ -65,25 +65,27 @@ void 		CNF::printOut(std::ofstream &fo) const {
 
 
 int 		CNF::resolve(unsigned int prio) {
-	for (std::set< Proposition >::iterator it = propList.begin(); it != propList.end(); ++it) {
-		std::set< Proposition >::iterator jt = it;
+	for (SIter it = propList.begin(); it != propList.end(); ++it) {
+		SIter jt = it;
 		++jt;
 		
 		for (; jt != propList.end(); ++jt) {
-			Proposition u = *it, v = *jt;
-			Proposition c = u&v;
+			Element u = *it, v = *jt;
+			Element c = u&v;
 			if (c.isTrue())
 				continue;
 
-			if (propList.find(c) != propList.end())
+			if (propExist(c))
 				continue;
-			propList.erase(u);
-			propList.erase(v);
-			propList.insert(c);
-			u.assignPriority(prio);
-			v.assignPriority(prio);
-			propList.insert(u);
-			propList.insert(v);
+
+			propList.erase(u); propList.erase(v);
+			
+			addProp(c);
+			
+			u.assignPriority(prio); v.assignPriority(prio);
+			
+			propList.insert(u); propList.insert(v);
+
 			if (c.isFalse())
 				return 1;
 			return 0;

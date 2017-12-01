@@ -10,7 +10,6 @@
 class Proposition {
 private:
 	std::set<int>	S;		// if S is empty, then the proposition is True
-	unsigned int 	prio;		// the "priority" of a proposition in set
 
 public:
 	Proposition();
@@ -21,8 +20,6 @@ public:
 	
 	bool		isTrue() const;
 	bool 		isFalse() const;
-
-	void		assignPriority(unsigned int p);
 
 	void 		printOut(std::ofstream &fo, const std::vector< std::string > &mpStr) const;
 };
