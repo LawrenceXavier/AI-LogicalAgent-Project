@@ -72,7 +72,7 @@ public:
 	void		printOut(std::ofstream &fo) const;
 	int 		resolve(unsigned int prio);
 
-	friend void 	RobinsonResolution(CNF cnf, const std::string &FILE_NAME);
+	friend void 	RobinsonResolution(CNF &cnf, const std::string &FILE_NAME);
 };
 
 

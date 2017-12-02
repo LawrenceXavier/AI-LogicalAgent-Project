@@ -176,7 +176,7 @@ int 		CNF::resolve(unsigned int prio) {
 }
 
 
-void 		RobinsonResolution(CNF cnf, const std::string &FILE_NAME) {
+void 		RobinsonResolution(CNF &cnf, const std::string &FILE_NAME) {
 	std::ofstream fo(FILE_NAME.c_str());
 	
 	fo << cnf.inferred << std::endl;
