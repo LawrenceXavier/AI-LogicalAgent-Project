@@ -48,8 +48,14 @@ void 		Element::printOut(std::ofstream &fo, const std::vector< std::string > &mp
 	this->p->printOut(fo, mpStr);
 }	
 
-void		ListProposition::addProp(const Element &e) {
-	staticList.insert(e.p);
+void		ListProposition::addProp(Element &e) {
+	if (staticList.find(e.p) != staticList.end()) {
+		Proposition* temp = e.p;
+		e.p = *staticList.find(e.p);
+		delete temp;
+	}
+	else
+		staticList.insert(e.p);
 }
 
 
@@ -66,8 +72,9 @@ ListProposition::~ListProposition() {
 
 
 void 		CNF::addProp(const Element &e) {
-	propList.insert(e);
-	LP.addProp(e);
+	Element t = e;
+	LP.addProp(t);
+	propList.insert(t);
 }
 
 
@@ -113,7 +120,7 @@ CNF::CNF(const std::string &FILE_NAME) {
 		std::getline(fi, s);
 		if (s == END_KB)	// read END_KB
 			break;
-		propList.insert(splitIntoLiterals(s, OR_OP));
+		addProp(splitIntoLiterals(s, OR_OP));
 	} 
 
 	std::getline(fi, s);

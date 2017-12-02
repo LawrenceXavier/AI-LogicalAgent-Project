@@ -45,7 +45,7 @@ private:
 
 	TStatList	staticList;
 public:
-	void	addProp(const Element &e); 
+	void	addProp(Element &e); 
 	bool	propExist(const Element &e);
 	~ListProposition(); 
 };
